@@ -10,7 +10,7 @@ namespace abahaBravo.Vendor.Connection.enfoce
         {
             _databaseSetting = databaseSetting;
         }
-        private SqlConnection CreateConnection()
+        public SqlConnection CreateConnection()
         {
             return new SqlConnection(_databaseSetting.GetConnectionInfo());
            

@@ -20,56 +20,36 @@ namespace abahaBravo.Controller
         }
 
         [HttpPost]
-        public JsonResult Create(CustomerRequest.Create request)
+        public JsonResult Create(CustomerRequest request)
         {
-            Request.Headers.TryGetValue("Authorization", out var token);
-            Request.Headers.TryGetValue("Cookie", out var cookie);
-            if (!CheckAuth.GetAuth(token, cookie))
+            foreach (Notifications<CustomerEntity_Request> notification in request.Notifications)
             {
-                var res = new JsonResult(new Response.Response(401, "Lỗi xác thực!"));
-                res.StatusCode = 401;
-                return res;
-            }
-
-            B20Customer customer = new B20Customer();
-
-            DataTable table = new DataTable();
-            string sqlDataSource = _configuration.GetConnectionString("EmployeeAppCon");
-            SqlDataReader myReader;
-            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
-            {
-                myCon.Open();
-                using (SqlCommand myCommand = new SqlCommand(customer.SelectQuery, myCon))
+                foreach (CustomerEntity_Request data in notification.Data)
                 {
-                    myCommand.Parameters.AddWithValue("@Code", request.Code);
-
-                    myReader = myCommand.ExecuteReader();
-                    table.Load(myReader);
-                    if (table.Rows.Count > 0)
+                    B20Customer customer = new B20Customer();
+            
+                    string sqlDataSource = _configuration.GetConnectionString("EmployeeAppCon");
+                    SqlDataReader myReader;
+                    using (SqlConnection myCon = new SqlConnection(sqlDataSource))
                     {
-                        myReader.Close();
+                        myCon.Open();
+                        using (SqlCommand myCommand = new SqlCommand(customer.CreatQuery, myCon))
+                        {
+                            myCommand.Parameters.Clear();
+                            myCommand.Parameters.AddWithValue("@Code", data.Code);
+                            myCommand.Parameters.AddWithValue("@Name", data.Name);
+                            myCommand.Parameters.AddWithValue("@Address", data.Address);
+                            myCommand.Parameters.AddWithValue("@BillingAddress", data.Address);
+                            myCommand.Parameters.AddWithValue("@Phone", data.ContactNumber);
+                            myCommand.Parameters.AddWithValue("@Email", data.Email);
+            
+                            myCommand.ExecuteReader();
+                        }
+            
                         myCon.Close();
-                        return new JsonResult(new Response.Response(200, "Đối tượng đã tồn tại!"));
-                        // return new JsonResult("{\"status\":200,\"message\":\"Đối tượng đã tồn tại!\"}");
                     }
                 }
-
-                using (SqlCommand myCommand = new SqlCommand(customer.CreatQuery, myCon))
-                {
-                    myCommand.Parameters.AddWithValue("@Code", request.Code);
-                    myCommand.Parameters.AddWithValue("@Name", request.Name);
-                    myCommand.Parameters.AddWithValue("@Address", request.Address);
-                    myCommand.Parameters.AddWithValue("@BillingAddress", request.Address);
-                    myCommand.Parameters.AddWithValue("@Phone", request.Phone);
-                    myCommand.Parameters.AddWithValue("@Email", request.Email);
-
-                    myCommand.ExecuteReader();
-                }
-
-                myReader.Close();
-                myCon.Close();
             }
-
 
             return new JsonResult(new Response.Response(200, "Thêm mới đối tượng thành công!"));
             // return new JsonResult("{\"status\":200,\"message\":\"Thêm mới đối tượng thành công!\"}");

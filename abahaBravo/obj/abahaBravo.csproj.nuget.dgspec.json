@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "E:\\C#\\eplus-bravo-kiot-api\\abahaBravo\\abahaBravo.csproj": {}
+    "D:\\C#\\ASP-SQL-Server\\abahaBravo\\abahaBravo.csproj": {}
   },
   "projects": {
-    "E:\\C#\\eplus-bravo-kiot-api\\abahaBravo\\abahaBravo.csproj": {
+    "D:\\C#\\ASP-SQL-Server\\abahaBravo\\abahaBravo.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\C#\\eplus-bravo-kiot-api\\abahaBravo\\abahaBravo.csproj",
+        "projectUniqueName": "D:\\C#\\ASP-SQL-Server\\abahaBravo\\abahaBravo.csproj",
         "projectName": "abahaBravo",
-        "projectPath": "E:\\C#\\eplus-bravo-kiot-api\\abahaBravo\\abahaBravo.csproj",
-        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "E:\\C#\\eplus-bravo-kiot-api\\abahaBravo\\obj\\",
+        "projectPath": "D:\\C#\\ASP-SQL-Server\\abahaBravo\\abahaBravo.csproj",
+        "packagesPath": "C:\\Users\\thangvm\\.nuget\\packages\\",
+        "outputPath": "D:\\C#\\ASP-SQL-Server\\abahaBravo\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\thangvm\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -65,7 +65,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.407\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.406\\RuntimeIdentifierGraph.json"
         }
       }
     }
