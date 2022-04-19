@@ -3,12 +3,12 @@
     public class AccDocc
     {
         public readonly string Query =
-            @"INSERT INTO AbahaAccdoc (Id,Code,DiscountRate,Address,Contact,Phone)
-                    VALUES (@_Id,@_Code,@_DiscountRate,@_Address,@_Contact,@_Phone)";
+            @"INSERT INTO AbahaAccdoc (Id,Code,CustomerCode,DiscountRate,Total,Payment)
+                    VALUES (@_Id,@_Code,@_CustomerCode,@_DiscountRate,@_Total,@_Payment)";
 
         public readonly string QueryAccDocSale =
-            @"INSERT INTO AbahaAccdocSale (Sku,Quantity,Price,Total,BillId)
-                    VALUES (@_Sku,@_Quantity,@_Price,@_Total,@_BillId)";
+            @"INSERT INTO AbahaAccdocSale (Code,Quantity,Price,Discount,Total,BillId)
+                    VALUES (@_Code,@_Quantity,@_Price,@_Discount,@_Total,@_BillId)";
 
         public readonly string QueryExec = @"EXEC uspAbahaConvertHDBravo @Id  = @_Id";
     }

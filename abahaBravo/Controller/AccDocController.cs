@@ -4,70 +4,82 @@ using abahaBravo.Model;
 using abahaBravo.Request;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-
+using Microsoft.Extensions.Logging;
 namespace abahaBravo.Controller
 {
     [Route("api/[controller]")]
     [ApiController]
+    
     public class AccDocController : ControllerBase
     {
         private readonly IConfiguration _configuration;
-
-        public AccDocController(IConfiguration configuration)
+        private readonly ILogger<AccDocController> _logger;
+        public AccDocController(IConfiguration configuration,ILoggerFactory logger)
         {
-            _configuration = configuration;
+            _configuration = configuration; 
+            _logger = logger.CreateLogger<AccDocController>();
         }
 
-        [HttpPost("/api/acc/doc/89f256y295ruj3yrt7890y3527h5f8923y56908234rf3905fny1489g5h234")]
+        [HttpPost("/api/acc/doc/89f256yD95ruj3.yrt789_7h5f89Z3y56-908234rf3905fny1489g5h234")]
         public JsonResult Create(AccDocRequest request)
         {
-            return new JsonResult(new Response.Response(200, request));
-            // long time = DateTime.Now.Ticks;
-            // AccDocc accDocc = new AccDocc();
-            //
-            // string sqlDataSource = _configuration.GetConnectionString("EmployeeAppCon");
-            // using (SqlConnection myCon = new SqlConnection(sqlDataSource))
-            // {
-            //     myCon.Open();
-            //     using (SqlCommand myCommand = new SqlCommand(accDocc.Query, myCon))
-            //     {
-            //         myCommand.Parameters.AddWithValue("@_Id", time);
-            //         myCommand.Parameters.AddWithValue("@_Code", request.Code);
-            //         myCommand.Parameters.AddWithValue("@_DiscountRate", request.DiscountRate);
-            //         myCommand.Parameters.AddWithValue("@_Address", request.Address);
-            //         myCommand.Parameters.AddWithValue("@_Contact", request.Contact);
-            //         myCommand.Parameters.AddWithValue("@_Phone", request.Phone);
-            //
-            //         myCommand.ExecuteReader();
-            //     }
-            //
-            //     foreach (var accDocSale in request.AccDocSales)
-            //     {
-            //         using (SqlCommand myCommand = new SqlCommand(accDocc.QueryAccDocSale, myCon))
-            //         {
-            //             myCommand.Parameters.Clear();
-            //             myCommand.Parameters.AddWithValue("@_Sku", accDocSale.Sku);
-            //             myCommand.Parameters.AddWithValue("@_Quantity", accDocSale.Quantity);
-            //             myCommand.Parameters.AddWithValue("@_Price", accDocSale.Price);
-            //             myCommand.Parameters.AddWithValue("@_Total", accDocSale.Price * accDocSale.Quantity);
-            //             myCommand.Parameters.AddWithValue("@_BillId", time);
-            //             myCommand.ExecuteReader();
-            //         }
-            //     }
-            //
-            //     using (SqlCommand myCommand = new SqlCommand(accDocc.QueryExec, myCon))
-            //     {
-            //         myCommand.Parameters.Clear();
-            //         myCommand.Parameters.AddWithValue("@_Id", time);
-            //         myCommand.ExecuteReader();
-            //     }
-            //
-            //     myCon.Close();
-            // }
-            //
-            //
-            // return new JsonResult(new Response.Response(200, "Thêm mới đối tượng thành công!"));
-            // return new JsonResult("{\"status\":200,\"message\":\"Thêm mới đối tượng thành công!\"}");
+            try
+            {
+                _logger.LogInformation(request.ToString());
+                AccDocc accDoccQr = new AccDocc();
+                string sqlDataSource = _configuration.GetConnectionString("EmployeeAppCon");
+                using (SqlConnection myCon = new SqlConnection(sqlDataSource))
+                {
+                    myCon.Open();
+                    foreach (Notifications<AccdocEntity> notification in request.Notifications)
+                    {
+                        foreach (AccdocEntity accDoc in notification.Data)
+                        {
+                            using (SqlCommand myCommand = new SqlCommand(accDoccQr.Query, myCon))
+                            {
+                                myCommand.Parameters.Clear();
+                                myCommand.Parameters.AddWithValue("@_Id", accDoc.Id);
+                                myCommand.Parameters.AddWithValue("@_Code", accDoc.Code);
+                                myCommand.Parameters.AddWithValue("@_CustomerCode", accDoc.CustomerCode);
+                                myCommand.Parameters.AddWithValue("@_DiscountRate", accDoc.Discount);
+                                myCommand.Parameters.AddWithValue("@_Total", accDoc.Discount + accDoc.TotalPayment);
+                                myCommand.Parameters.AddWithValue("@_Payment", accDoc.TotalPayment);
+                                myCommand.ExecuteReader();
+                            }
+
+                            foreach (ProductEntity accDocSale in accDoc.OrderDetails)
+                            {
+                                using (SqlCommand pCommand = new SqlCommand(accDoccQr.QueryAccDocSale, myCon))
+                                {
+                                    pCommand.Parameters.Clear();
+                                    pCommand.Parameters.AddWithValue("@_Code", accDocSale.ProductCode);
+                                    pCommand.Parameters.AddWithValue("@_Quantity", accDocSale.Quantity);
+                                    pCommand.Parameters.AddWithValue("@_Price", accDocSale.Price);
+                                    pCommand.Parameters.AddWithValue("@_Discount", accDocSale.Discount);
+                                    pCommand.Parameters.AddWithValue("@_Total", accDocSale.SubTotal);
+                                    pCommand.Parameters.AddWithValue("@_BillId", accDoc.Id);
+                                    pCommand.ExecuteNonQuery();
+                                }
+                            }
+
+                            using (SqlCommand myCommand = new SqlCommand(accDoccQr.QueryExec, myCon))
+                            {
+                                myCommand.Parameters.Clear();
+                                myCommand.Parameters.AddWithValue("@_Id", accDoc.Id);
+                                myCommand.ExecuteNonQuery();
+                            }
+                        }
+                    }
+
+                    myCon.Close();
+                }
+                return new JsonResult(new Response.Response(200, "Thêm mới đối tượng thành công!"));
+            }catch (Exception ex)
+            {
+                _logger.LogError($"Something went wrong: {ex}");
+                _logger.LogInformation($"Something went wrong: {ex}");
+                return new JsonResult(new Response.Response(500, "Lỗi!"));
+            }
         }
     }
 }
