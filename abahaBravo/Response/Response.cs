@@ -1,15 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using abahaBravo.Request;
 
 namespace abahaBravo.Response
 {
     public class Response
     {
-        public Response(int status,Object message)
-        {
-            Status = status;
-            Message = message;
-        }
-        public int Status { get; set; } = 200;
-        public Object Message { get; set; }
+        public int Total { get; set; }
+        public List<AccdocEntity> Data { get; set; }
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using abahaBravo.Service;
 using abahaBravo.Vendor.Connection;
 using abahaBravo.Vendor.Connection.enfoce;
 using Microsoft.AspNetCore.Builder;
@@ -38,6 +39,11 @@ namespace abahaBravo
             services.AddSingleton<IDatabaseSetting>(sp =>
                 sp.GetRequiredService<IOptions<DatabaseSetting>>().Value);
             services.AddSingleton<ISQLConnection, SQLConnection>();
+            services.AddCronJob<AccDocCrawlerService>(c =>
+            {
+                c.TimeZoneInfo = TimeZoneInfo.Local;
+                c.CronExpression = @"*/1 * * * *";
+            });
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

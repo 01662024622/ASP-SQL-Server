@@ -9,7 +9,8 @@ namespace abahaBravo.Request
         public string Code { get; set; }
         public int BrandId { get; set; }
         public string CustomerCode { get; set; }
-        public Decimal TotalPayment { get; set; }
+        public string CustomerId { get; set; }
+        public Decimal Total { get; set; }
         public Decimal Discount { get; set; }
         public List<ProductEntity> OrderDetails { get; set; }
     }

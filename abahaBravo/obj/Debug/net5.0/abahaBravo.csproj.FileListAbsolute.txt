@@ -68,3 +68,12 @@ D:\C#\ASP-SQL-Server\abahaBravo\obj\Debug\net5.0\abahaBravo.dll
 D:\C#\ASP-SQL-Server\abahaBravo\obj\Debug\net5.0\ref\abahaBravo.dll
 D:\C#\ASP-SQL-Server\abahaBravo\obj\Debug\net5.0\abahaBravo.pdb
 D:\C#\ASP-SQL-Server\abahaBravo\obj\Debug\net5.0\abahaBravo.genruntimeconfig.cache
+D:\C#\ASP-SQL-Server\abahaBravo\bin\Debug\net5.0\Cronos.dll
+D:\C#\ASP-SQL-Server\abahaBravo\bin\Debug\net5.0\Serilog.dll
+D:\C#\ASP-SQL-Server\abahaBravo\bin\Debug\net5.0\Serilog.Extensions.Logging.dll
+D:\C#\ASP-SQL-Server\abahaBravo\bin\Debug\net5.0\Serilog.Extensions.Logging.File.dll
+D:\C#\ASP-SQL-Server\abahaBravo\bin\Debug\net5.0\Serilog.Formatting.Compact.dll
+D:\C#\ASP-SQL-Server\abahaBravo\bin\Debug\net5.0\Serilog.Sinks.Async.dll
+D:\C#\ASP-SQL-Server\abahaBravo\bin\Debug\net5.0\Serilog.Sinks.File.dll
+D:\C#\ASP-SQL-Server\abahaBravo\bin\Debug\net5.0\Serilog.Sinks.RollingFile.dll
+D:\C#\ASP-SQL-Server\abahaBravo\bin\Debug\net5.0\Newtonsoft.Json.dll
