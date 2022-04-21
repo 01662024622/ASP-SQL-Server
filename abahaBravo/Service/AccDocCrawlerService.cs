@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using abahaBravo.Request;
+using abahaBravo.Response;
 using abahaBravo.Util;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
@@ -11,6 +13,9 @@ namespace abahaBravo.Service
     public class AccDocCrawlerService : CronJobService
 
     {
+        private const string SQL_CONNECT =
+            "server=27.71.233.229,52022,52022;database=B8R2_EPlus_Technologybak;user id=abaha;password=123456;MultipleActiveResultSets=true";
+
         private const string CLIENT_SECRET = "9BE94DC179BB890F4AB1DC7EFF16F819B10C11C5";
         private const string CLIENT_ID = "2c181bb5-10a9-4063-8a94-9e89f20564f0";
         private const string URL_TOKEN = "https://id.kiotviet.vn/connect/token";
@@ -32,7 +37,7 @@ namespace abahaBravo.Service
 
         public override Task StartAsync(CancellationToken cancellationToken)
         {
-            _logger.LogInformation("CronJob 1 starts." + date.ToString("yyyy/MM/dd H:mm"));
+            Crawl();
             return base.StartAsync(cancellationToken);
         }
 
@@ -51,7 +56,6 @@ namespace abahaBravo.Service
 
         private void Crawl()
         {
-            
             date = DateTime.Now;
             string today = DateTime.Now.ToString("yyyy-MM-dd H");
             if (!today.Equals(CheckDate))
@@ -62,12 +66,27 @@ namespace abahaBravo.Service
                 CheckDate = today;
                 TOKEN = ApiService.OAuth2(URL_TOKEN, body);
             }
-            string param = $"?fromPurchaseDate={CheckDate}:00:00&toPurchaseDate={CheckDate}:00:00";
-            string customer = ApiService.Get(URL_API + ACCDOC + param, TOKEN);
-            Console.WriteLine(customer);
-            AccDocRequest result = JsonConvert.DeserializeObject<AccDocRequest>(customer);
+
+
+            string param =
+                "?format=json&toPurchaseDate=2022-04-20 19:00:00&fromPurchaseDate=2022-04-20 19:00:00&pageSize=100";
+            // string param = $"?fromPurchaseDate={CheckDate}:00:00&toPurchaseDate={CheckDate}:59:00&pageSize=100";
+
             
-            Console.WriteLine("--------------------"+result.Id+"-----------------------");
+            // add customer
+            string customer = ApiService.Get(URL_API + CUSTOMER + param, TOKEN);
+            CustomerResponse result = JsonConvert.DeserializeObject<CustomerResponse>(customer);
+            for (int i = 0; i < result.Total; i++)
+            {
+                CustomerService.CreatedResult(SQL_CONNECT, result.Data[i]);
+            }
+            // add accdoc
+            string AccRess = ApiService.Get(URL_API + ACCDOC + param, TOKEN);
+            AccdocResponse resultAcc = JsonConvert.DeserializeObject<AccdocResponse>(AccRess);
+            for (int i = 0; i < resultAcc.Total; i++)
+            {
+                AccDocService.CreatedResult(SQL_CONNECT, resultAcc.Data[i]);
+            }
         }
     }
 }

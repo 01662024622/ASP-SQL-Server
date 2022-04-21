@@ -2,9 +2,9 @@
 {
     public class B20Customer
     {
-        public string SelectQuery = @"SELECT * FROM B20Customer WHERE Code = @Code";
+        public string SelectQuery = @"SELECT * FROM B20Customer WHERE Kiot_Id = @_Id";
         public string CreatQuery =
-            @"INSERT INTO B20Customer (ParentId,IsGroup,BranchCode,Code,Name,Address,BillingAddress,PersonTel, Email,CustomerType)
-                    VALUES ('402281',0,'A01',@Code,@Name,@Address,@BillingAddress,@Phone,@Email,1)";
+            @"INSERT INTO B20Customer (ParentId,IsGroup,BranchCode,Code,Name,Address,BillingAddress,PersonTel,CustomerType,Kiot_Id,KiotLog)
+                    VALUES ('402281',0,'A01',@_Code,@_Name,@_Address,@_BillingAddress,@_Phone,1,@_Kiot_Id,'kiot tranfer')";
     }
 }

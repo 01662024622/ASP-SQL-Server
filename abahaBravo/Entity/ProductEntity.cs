@@ -4,10 +4,10 @@ namespace abahaBravo.Request
 {
     public class ProductEntity
     {
-        public string ProductCode { get; set; }
-        public double Quantity { get; set; }
-        public Decimal Price { get; set; }
-        public Decimal Discount { get; set; }
-        public Decimal SubTotal { get; set; }
+        public long ProductId { get; set; }
+        public long Quantity { get; set; }
+        public long Price { get; set; }
+        public long Discount { get; set; }
+        public long SubTotal { get; set; }
     }
 }

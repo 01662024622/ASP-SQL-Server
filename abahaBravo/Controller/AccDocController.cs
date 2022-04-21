@@ -39,20 +39,20 @@ namespace abahaBravo.Controller
                             {
                                 myCommand.Parameters.Clear();
                                 myCommand.Parameters.AddWithValue("@_Id", accDoc.Id);
-                                myCommand.Parameters.AddWithValue("@_Code", accDoc.Code);
+                                myCommand.Parameters.AddWithValue("@_Kiot_Id  ", accDoc.Code);
                                 myCommand.Parameters.AddWithValue("@_CustomerCode", accDoc.CustomerCode);
                                 myCommand.Parameters.AddWithValue("@_DiscountRate", accDoc.Discount);
-                                myCommand.Parameters.AddWithValue("@_Total", accDoc.Discount + accDoc.TotalPayment);
-                                myCommand.Parameters.AddWithValue("@_Payment", accDoc.TotalPayment);
+                                myCommand.Parameters.AddWithValue("@_Total", accDoc.Total+accDoc.Discount);
+                                myCommand.Parameters.AddWithValue("@_Payment", accDoc.Total);
                                 myCommand.ExecuteReader();
                             }
 
-                            foreach (ProductEntity accDocSale in accDoc.OrderDetails)
+                            foreach (ProductEntity accDocSale in accDoc.InvoiceDetails)
                             {
                                 using (SqlCommand pCommand = new SqlCommand(accDoccQr.QueryAccDocSale, myCon))
                                 {
                                     pCommand.Parameters.Clear();
-                                    pCommand.Parameters.AddWithValue("@_Code", accDocSale.ProductCode);
+                                    pCommand.Parameters.AddWithValue("@_Id", accDocSale.ProductId);
                                     pCommand.Parameters.AddWithValue("@_Quantity", accDocSale.Quantity);
                                     pCommand.Parameters.AddWithValue("@_Price", accDocSale.Price);
                                     pCommand.Parameters.AddWithValue("@_Discount", accDocSale.Discount);
@@ -73,12 +73,12 @@ namespace abahaBravo.Controller
 
                     myCon.Close();
                 }
-                return new JsonResult(new Response.Response(200, "Thêm mới đối tượng thành công!"));
+                return new JsonResult(200,"success");
             }catch (Exception ex)
             {
                 _logger.LogError($"Something went wrong: {ex}");
                 _logger.LogInformation($"Something went wrong: {ex}");
-                return new JsonResult(new Response.Response(500, "Lỗi!"));
+                return new JsonResult(500, "Lỗi!");
             }
         }
     }

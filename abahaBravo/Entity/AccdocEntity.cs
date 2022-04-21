@@ -7,11 +7,11 @@ namespace abahaBravo.Request
     {
         public long Id { get; set; }
         public string Code { get; set; }
-        public int BrandId { get; set; }
+        public long BranchId { get; set; }
         public string CustomerCode { get; set; }
-        public string CustomerId { get; set; }
-        public Decimal Total { get; set; }
-        public Decimal Discount { get; set; }
-        public List<ProductEntity> OrderDetails { get; set; }
+        public long CustomerId { get; set; } = 9999999999;
+        public long Total { get; set; }
+        public long Discount { get; set; }
+        public List<ProductEntity> InvoiceDetails { get; set; }
     }
 }

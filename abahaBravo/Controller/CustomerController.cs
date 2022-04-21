@@ -25,7 +25,7 @@ namespace abahaBravo.Controller
         [HttpGet]
         public JsonResult Index()
         {
-            return new JsonResult(new Response.Response(200, "Khởi tạo thành công!"));
+            return new JsonResult(200, "Khởi tạo thành công!");
         }
 
         [HttpPost("/api/customer/49f25S6yD95ru2j3.yrt78T_7h5f89Z3y56-9084rf3905fny14I9J5h234")]
@@ -64,12 +64,13 @@ namespace abahaBravo.Controller
             {
                 _logger.LogError($"Something went wrong: {ex}");
                 _logger.LogInformation($"Something went wrong: {ex}");
-                return new JsonResult(new Response.Response(500, "Lỗi!"));
+                return new JsonResult(500, "Lỗi!");
             }
 
-            return new JsonResult(new Response.Response(200, "Thêm mới đối tượng thành công!"));
+            return new JsonResult(200, "Thêm mới đối tượng thành công!");
             // return new JsonResult("{\"status\":200,\"message\":\"Thêm mới đối tượng thành công!\"}");
         }
+
         [HttpPut("/api/customer/49f25S6yD95ru2j3.yrt78T_7h5f89Z3y56-9084rf3905fny14I9J5h234")]
         public JsonResult Update(CustomerRequest request)
         {
@@ -106,10 +107,10 @@ namespace abahaBravo.Controller
             {
                 _logger.LogError($"Something went wrong: {ex}");
                 _logger.LogInformation($"Something went wrong: {ex}");
-                return new JsonResult(new Response.Response(500, "Lỗi!"));
+                return new JsonResult(500, "Lỗi!");
             }
 
-            return new JsonResult(new Response.Response(200, "Thêm mới đối tượng thành công!"));
+            return new JsonResult(200, "Thêm mới đối tượng thành công!");
             // return new JsonResult("{\"status\":200,\"message\":\"Thêm mới đối tượng thành công!\"}");
         }
     }
