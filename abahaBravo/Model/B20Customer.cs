@@ -6,5 +6,8 @@
         public string CreatQuery =
             @"INSERT INTO B20Customer (ParentId,IsGroup,BranchCode,Code,Name,Address,BillingAddress,PersonTel,CustomerType,Kiot_Id,KiotLog)
                     VALUES ('402281',0,'A01',@_Code,@_Name,@_Address,@_BillingAddress,@_Phone,1,@_Kiot_Id,'kiot tranfer')";
+        public string Crawler =
+            @"INSERT INTO AbahaCustomerCrawler2 (Code,IdKiot)
+                    VALUES (@_Code,@_Kiot_Id)";
     }
 }

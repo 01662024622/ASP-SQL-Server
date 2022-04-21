@@ -39,10 +39,10 @@ namespace abahaBravo
             services.AddSingleton<IDatabaseSetting>(sp =>
                 sp.GetRequiredService<IOptions<DatabaseSetting>>().Value);
             services.AddSingleton<ISQLConnection, SQLConnection>();
-            services.AddCronJob<AccDocCrawlerService>(c =>
+            services.AddCronJob<CustomerCrawlerService>(c =>
             {
                 c.TimeZoneInfo = TimeZoneInfo.Local;
-                c.CronExpression = @"*/10 * * * *";
+                c.CronExpression = @"*/30 * * * *";
             });
             services.AddControllers();
             services.AddSwaggerGen(c =>
