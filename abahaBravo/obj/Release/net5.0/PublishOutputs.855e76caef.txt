@@ -7,6 +7,7 @@ D:\C#\ASP-SQL-Server\abahaBravo\bin\Release\net5.0\publish\abahaBravo.runtimecon
 D:\C#\ASP-SQL-Server\abahaBravo\bin\Release\net5.0\publish\abahaBravo.pdb
 D:\C#\ASP-SQL-Server\abahaBravo\bin\Release\net5.0\publish\Cronos.dll
 D:\C#\ASP-SQL-Server\abahaBravo\bin\Release\net5.0\publish\Microsoft.OpenApi.dll
+D:\C#\ASP-SQL-Server\abahaBravo\bin\Release\net5.0\publish\Newtonsoft.Json.dll
 D:\C#\ASP-SQL-Server\abahaBravo\bin\Release\net5.0\publish\Serilog.dll
 D:\C#\ASP-SQL-Server\abahaBravo\bin\Release\net5.0\publish\Serilog.Extensions.Logging.dll
 D:\C#\ASP-SQL-Server\abahaBravo\bin\Release\net5.0\publish\Serilog.Extensions.Logging.File.dll

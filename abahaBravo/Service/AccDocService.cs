@@ -33,6 +33,7 @@ namespace abahaBravo.Service
                         SqlDataReader reader = slectCommand.ExecuteReader();
                         if (reader.HasRows)
                         {
+                            Console.WriteLine("-----------------"+accdocEntity.Id+"-----------------");
                             return;
                         }
                     }
@@ -41,7 +42,7 @@ namespace abahaBravo.Service
                     {
                         myCommand.Parameters.Clear();
                         myCommand.Parameters.AddWithValue("@_Id", accdocEntity.Id);
-                        myCommand.Parameters.AddWithValue("@_Kiot_Id  ", accdocEntity.CustomerId);
+                        myCommand.Parameters.AddWithValue("@_Kiot_Id  ", accdocEntity.CustomerId.ToString());
                         myCommand.Parameters.AddWithValue("@_CustomerCode", accdocEntity.CustomerCode);
                         myCommand.Parameters.AddWithValue("@_DiscountRate", accdocEntity.Discount);
                         myCommand.Parameters.AddWithValue("@_Total", accdocEntity.Total + accdocEntity.Discount);
@@ -54,7 +55,7 @@ namespace abahaBravo.Service
                         using (SqlCommand pCommand = new SqlCommand(accDoccQr.QueryAccDocSale, myCon))
                         {
                             pCommand.Parameters.Clear();
-                            pCommand.Parameters.AddWithValue("@_Kiot_Id", accDocSale.ProductId);
+                            pCommand.Parameters.AddWithValue("@_Kiot_Id", accDocSale.ProductId.ToString());
                             pCommand.Parameters.AddWithValue("@_Quantity", accDocSale.Quantity);
                             pCommand.Parameters.AddWithValue("@_Price", accDocSale.Price);
                             pCommand.Parameters.AddWithValue("@_InventoryId", _inventory[accdocEntity.BranchId]);
@@ -68,19 +69,18 @@ namespace abahaBravo.Service
                 }
 
 
-                // using (SqlConnection myConExec = new SqlConnection(sqlDataSource))
-                // {
-                //     myConExec.Open();
-                //     using (SqlCommand myCommand = new SqlCommand(accDoccQr.QueryExec, myConExec))
-                //     {
-                //         myCommand.Parameters.Clear();
-                //         myCommand.Parameters.AddWithValue("@_Id", accdocEntity.Id);
-                //         Console.WriteLine();
-                //         myCommand.ExecuteNonQuery();
-                //     }
-                //
-                //     myConExec.Close();
-                // }
+                using (SqlConnection myConExec = new SqlConnection(sqlDataSource))
+                {
+                    myConExec.Open();
+                    using (SqlCommand myCommand = new SqlCommand(accDoccQr.QueryExec, myConExec))
+                    {
+                        myCommand.Parameters.Clear();
+                        myCommand.Parameters.AddWithValue("@_Id", accdocEntity.Id);
+                        myCommand.ExecuteNonQuery();
+                    }
+                
+                    myConExec.Close();
+                }
             }
             catch (Exception ex)
             {

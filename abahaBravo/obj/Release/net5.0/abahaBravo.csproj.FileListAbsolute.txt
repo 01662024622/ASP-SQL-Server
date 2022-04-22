@@ -41,3 +41,4 @@ D:\C#\ASP-SQL-Server\abahaBravo\bin\Release\net5.0\Serilog.Sinks.Async.dll
 D:\C#\ASP-SQL-Server\abahaBravo\bin\Release\net5.0\Serilog.Sinks.File.dll
 D:\C#\ASP-SQL-Server\abahaBravo\bin\Release\net5.0\Serilog.Sinks.RollingFile.dll
 D:\C#\ASP-SQL-Server\abahaBravo\bin\Release\net5.0\Cronos.dll
+D:\C#\ASP-SQL-Server\abahaBravo\bin\Release\net5.0\Newtonsoft.Json.dll
