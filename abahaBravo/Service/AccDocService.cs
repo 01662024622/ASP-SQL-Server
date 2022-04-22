@@ -33,9 +33,10 @@ namespace abahaBravo.Service
                         SqlDataReader reader = slectCommand.ExecuteReader();
                         if (reader.HasRows)
                         {
-                            Console.WriteLine("-----------------"+accdocEntity.Id+"-----------------");
+                            Console.WriteLine("--------Accdoc ID exist---------"+accdocEntity.Id+"-----------------");
                             return;
                         }
+                        Console.WriteLine("----Accdoc ID add--------"+accdocEntity.Id+"------------");
                     }
 
                     using (SqlCommand myCommand = new SqlCommand(accDoccQr.Query, myCon))

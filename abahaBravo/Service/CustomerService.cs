@@ -19,12 +19,14 @@ namespace abahaBravo.Service
                     using (SqlCommand slectCommand = new SqlCommand(customerModel.SelectQuery, myCon))
                     {
                         slectCommand.Parameters.Clear();
-                        slectCommand.Parameters.AddWithValue("@_Id", customer.Id.ToString());
+                        slectCommand.Parameters.AddWithValue("@_Kiot_Id", customer.Id.ToString());
                         SqlDataReader reader = slectCommand.ExecuteReader();
                         if (reader.HasRows)
                         {
+                            Console.WriteLine("----Customer ID exist--------"+customer.Id+"------------");
                             return;
                         }
+                        Console.WriteLine("----Customer ID add--------"+customer.Id+"------------");
                     }
                     using (SqlCommand myCommand = new SqlCommand(customerModel.CreatQuery, myCon))
                     {
