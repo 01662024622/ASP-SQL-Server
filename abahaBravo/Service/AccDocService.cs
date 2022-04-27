@@ -20,6 +20,7 @@ namespace abahaBravo.Service
 
         public static void CreatedResult(string sqlDataSource, AccdocEntity accdocEntity)
         {
+            if (accdocEntity.StatusValue.Equals("Đã hủy")) return;
             try
             {
                 AccDocc accDoccQr = new AccDocc();
@@ -33,10 +34,12 @@ namespace abahaBravo.Service
                         SqlDataReader reader = slectCommand.ExecuteReader();
                         if (reader.HasRows)
                         {
-                            Console.WriteLine("--------Accdoc ID exist---------"+accdocEntity.Id+"-----------------");
+                            Console.WriteLine(
+                                "--------Accdoc ID exist---------" + accdocEntity.Id + "-----------------");
                             return;
                         }
-                        Console.WriteLine("----Accdoc ID add--------"+accdocEntity.Id+"------------");
+
+                        Console.WriteLine("----Accdoc ID add--------" + accdocEntity.Id + "------------");
                     }
 
                     using (SqlCommand myCommand = new SqlCommand(accDoccQr.Query, myCon))
@@ -48,6 +51,7 @@ namespace abahaBravo.Service
                         myCommand.Parameters.AddWithValue("@_DiscountRate", accdocEntity.Discount);
                         myCommand.Parameters.AddWithValue("@_Total", accdocEntity.Total + accdocEntity.Discount);
                         myCommand.Parameters.AddWithValue("@_Payment", accdocEntity.Total);
+                        myCommand.Parameters.AddWithValue("@_Description", accdocEntity.Description);
                         myCommand.ExecuteNonQuery();
                     }
 
@@ -66,6 +70,7 @@ namespace abahaBravo.Service
                             pCommand.ExecuteNonQuery();
                         }
                     }
+
                     myCon.Close();
                 }
 
@@ -79,7 +84,13 @@ namespace abahaBravo.Service
                         myCommand.Parameters.AddWithValue("@_Id", accdocEntity.Id);
                         myCommand.ExecuteNonQuery();
                     }
-                
+
+                    using (SqlCommand myCommand = new SqlCommand(accDoccQr.QueryExecInventory, myConExec))
+                    {
+                        myCommand.Parameters.Clear();
+                        myCommand.ExecuteNonQuery();
+                    }
+
                     myConExec.Close();
                 }
             }

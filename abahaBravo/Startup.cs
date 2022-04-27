@@ -42,7 +42,7 @@ namespace abahaBravo
             services.AddCronJob<AccDocCrawlerService>(c =>
             {
                 c.TimeZoneInfo = TimeZoneInfo.Local;
-                c.CronExpression = @"*/30 * * * *";
+                c.CronExpression = @"*/1 * * * *";
             });
             services.AddControllers();
             services.AddSwaggerGen(c =>

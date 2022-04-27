@@ -12,6 +12,9 @@ namespace abahaBravo.Request
         public long CustomerId { get; set; } = 12866196;
         public long Total { get; set; }
         public long Discount { get; set; }
+        public string Description { get; set; } = " ";
+        public string StatusValue { get; set; }
+        
         public List<ProductEntity> InvoiceDetails { get; set; }
     }
 }
